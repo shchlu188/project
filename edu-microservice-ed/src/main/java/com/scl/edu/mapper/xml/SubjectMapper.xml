@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scl.edu.mapper.SubjectMapper">
+    <resultMap id="nestedSubject" type="com.scl.edu.vo.SubjectVO2">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <collection property="children"
+                    ofType="com.scl.edu.vo.SubjectVO2"
+                    column="id"
+                    select="selectNestedListByParentId"/>
+
+    </resultMap>
+
+    <select id="selectNestedListByParentId" resultMap="nestedSubject">
+        select * from edu_subject
+        where parent_id = #{parentId}
+    </select>
+</mapper>
